@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verso la Pasqua · Easter Workshop – Legàmi in Italia</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #001f3f;
+    --blue: #073e76;
+    --orange: #ffa500;
+    --white: #fff;
+    --cream: #fdf8f0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Raleway', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    overflow-x: hidden;
+  }
+
+  /* LANG TOGGLE */
+  .lang-bar {
+    position: fixed;
+    top: 0; right: 0;
+    z-index: 100;
+    padding: 10px 20px;
+    display: flex;
+    gap: 6px;
+    background: rgba(0,31,63,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom-left-radius: 12px;
+  }
+  .lang-btn {
+    background: none;
+    border: 1px solid rgba(255,165,0,0.5);
+    color: var(--white);
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all .25s;
+  }
+  .lang-btn.active, .lang-btn:hover {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: var(--navy);
+    font-weight: 600;
+  }
+  [data-lang="en"] .it { display: none; }
+  [data-lang="it"] .en { display: none; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px 60px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(255,165,0,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(7,62,118,0.6) 0%, transparent 60%);
+  }
+  .cross-bg {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(420px, 80vw);
+    height: auto;
+    opacity: 0.04;
+  }
+  .brand {
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(14px, 2vw, 18px);
+    color: rgba(255,255,255,0.55);
+    letter-spacing: .05em;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(42px, 8vw, 88px);
+    color: var(--white);
+    line-height: 1.05;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    letter-spacing: -.01em;
+  }
+  .hero-title em { font-style: italic; color: var(--orange); }
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 3vw, 26px);
+    font-style: italic;
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    margin-top: 18px;
+    position: relative;
+    z-index: 1;
+    max-width: 540px;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+  .meta-pill {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,165,0,0.3);
+    border-radius: 40px;
+    padding: 10px 22px;
+    color: var(--white);
+    font-size: 13px;
+    letter-spacing: .06em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .meta-pill .icon { color: var(--orange); font-size: 15px; }
+  .hero-cta {
+    margin-top: 50px;
+    position: relative;
+    z-index: 1;
+  }
+  .btn-primary {
+    display: inline-block;
+    background: var(--orange);
+    color: var(--navy);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 40px;
+    border-radius: 50px;
+    transition: all .3s;
+    box-shadow: 0 0 40px rgba(255,165,0,0.25);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 50px rgba(255,165,0,0.4);
+    background: #ffb733;
+  }
+  .scroll-hint {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255,255,255,0.3);
+    font-size: 10px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+  }
+  .scroll-hint .line {
+    width: 1px; height: 32px;
+    background: linear-gradient(to bottom, rgba(255,165,0,0.5), transparent);
+    animation: scrollpulse 2s ease infinite;
+  }
+  @keyframes scrollpulse { 0%,100%{opacity:.3} 50%{opacity:1} }
+
+  /* SECTIONS */
+  section { padding: 80px 24px; }
+  .container { max-width: 860px; margin: 0 auto; }
+  .section-label {
+    font-size: 10px;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(30px, 5vw, 48px);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--navy);
+  }
+  .section-title em { font-style: italic; color: var(--blue); }
+  .divider { width: 48px; height: 2px; background: var(--orange); margin: 24px 0; }
+  p { font-size: 15px; line-height: 1.8; color: rgba(0,31,63,0.75); }
+
+  /* FOR WHO */
+  .for-who { background: var(--white); }
+  .for-who .container { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  @media(max-width:640px){ .for-who .container { grid-template-columns: 1fr; gap: 40px; } }
+  .quote-block {
+    border-left: 3px solid var(--orange);
+    padding-left: 24px;
+    margin: 32px 0;
+  }
+  .quote-block blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(20px, 3vw, 26px);
+    color: var(--blue);
+    line-height: 1.4;
+  }
+
+  /* PROGRAM */
+  .program { background: var(--navy); }
+  .program .section-title { color: var(--white); }
+  .program .section-label { color: var(--orange); }
+  .program p { color: rgba(255,255,255,0.6); }
+  .timeline { margin-top: 48px; display: flex; flex-direction: column; gap: 0; }
+  .tl-block { display: grid; grid-template-columns: 80px 1fr; gap: 0 24px; position: relative; }
+  .tl-time {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--orange);
+    padding-top: 20px;
+    text-align: right;
+    letter-spacing: .05em;
+  }
+  .tl-body {
+    border-left: 1px solid rgba(255,165,0,0.25);
+    padding: 20px 0 20px 28px;
+    position: relative;
+  }
+  .tl-body::before {
+    content: '';
+    position: absolute;
+    left: -5px; top: 26px;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--orange);
+    box-shadow: 0 0 12px rgba(255,165,0,0.6);
+  }
+  .tl-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .tl-desc { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.7; }
+  .tl-badge {
+    display: inline-block;
+    background: rgba(255,165,0,0.15);
+    border: 1px solid rgba(255,165,0,0.3);
+    color: var(--orange);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+
+  /* EMMAUS */
+  .emmaus { background: var(--cream); border-top: 1px solid rgba(7,62,118,0.08); }
+  .emmaus-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  @media(max-width:640px){ .emmaus-inner { grid-template-columns: 1fr; } }
+  .verse-card {
+    background: var(--blue);
+    border-radius: 4px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .verse-card::before {
+    content: '✦';
+    position: absolute;
+    top: -20px; right: -10px;
+    font-size: 100px;
+    color: rgba(255,165,0,0.08);
+    line-height: 1;
+  }
+  .verse-card blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 22px);
+    color: var(--white);
+    line-height: 1.55;
+  }
+  .verse-card cite {
+    display: block;
+    margin-top: 16px;
+    font-size: 11px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--orange);
+    font-style: normal;
+  }
+
+  /* INSTRUCTOR */
+  .instructor { background: var(--white); }
+  .instructor-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 40px;
+    align-items: start;
+    margin-top: 40px;
+  }
+  @media(max-width:500px){ .instructor-grid { grid-template-columns: 1fr; } }
+  .avatar {
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 3px solid var(--orange);
+    box-shadow: 0 0 0 4px rgba(255,165,0,0.15);
+  }
+  .instr-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .instr-role {
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 16px;
+  }
+
+  /* CTA */
+  .cta-section { background: var(--blue); text-align: center; padding: 100px 24px; }
+  .cta-section .section-title { color: var(--white); }
+  .cta-section p { color: rgba(255,255,255,0.65); max-width: 480px; margin: 0 auto 40px; }
+  .cta-section .divider { margin: 20px auto; }
+  .btn-secondary {
+    display: inline-block;
+    background: transparent;
+    color: var(--orange);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 14px 36px;
+    border: 1px solid var(--orange);
+    border-radius: 50px;
+    margin-top: 16px;
+    margin-left: 12px;
+    transition: all .3s;
+  }
+  .btn-secondary:hover { background: rgba(255,165,0,0.1); }
+
+  /* FOOTER */
+  footer { background: var(--navy); padding: 32px 24px; text-align: center; }
+  footer p { font-size: 12px; color: rgba(255,255,255,0.3); letter-spacing: .05em; }
+  footer span { color: var(--orange); }
+
+  /* FAQ */
+  .faq-section { background: var(--white); }
+  .faq-list { margin-top: 40px; display: flex; flex-direction: column; gap: 0; }
+  .faq-item { border-bottom: 1px solid rgba(7,62,118,0.1); }
+  .faq-q {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    font-family: 'Raleway', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--navy);
+    text-align: left;
+    transition: color .2s;
+  }
+  .faq-q:hover { color: var(--blue); }
+  .faq-icon {
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--orange);
+    flex-shrink: 0;
+    transition: transform .3s;
+    line-height: 1;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .4s ease, padding .3s ease;
+    padding: 0;
+  }
+  .faq-item.open .faq-a { max-height: 400px; padding-bottom: 20px; }
+  .faq-a p { font-size: 14px; color: rgba(0,31,63,0.7); line-height: 1.8; }
+  .faq-tz {
+    list-style: none;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .faq-tz li {
+    font-size: 14px;
+    color: rgba(0,31,63,0.75);
+    padding: 8px 16px;
+    background: var(--cream);
+    border-radius: 6px;
+    border-left: 3px solid var(--orange);
+  }
+  .faq-link {
+    color: var(--orange);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: .04em;
+  }
+  .faq-link:hover { text-decoration: underline; }
+
+  /* PRICE TAG */
+  .price-tag {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 300;
+    color: var(--orange);
+    margin-bottom: 16px;
+    letter-spacing: -.02em;
+  }
+
+  /* FADE IN */
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body data-lang="en">
+
+<div class="lang-bar">
+  <button class="lang-btn" onclick="setLang('it')">IT</button>
+  <button class="lang-btn active" onclick="setLang('en')">EN</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <svg class="cross-bg" viewBox="0 0 200 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="85" y="0" width="30" height="260" fill="white"/>
+    <rect x="0" y="70" width="200" height="30" fill="white"/>
+  </svg>
+
+  <div class="brand">Legàmi in Italia</div>
+
+  <p class="hero-eyebrow">
+    <span class="it">Workshop · 14 Marzo 2026</span>
+    <span class="en">Workshop · March 14, 2026</span>
+  </p>
+
+  <h1 class="hero-title">
+    <span class="it">Verso la<br><em>Pasqua</em></span>
+    <span class="en">Towards<br><em>Easter</em></span>
+  </h1>
+
+  <p class="hero-subtitle">
+    <span class="it">Cultura, fede e lingua italiana — insieme</span>
+    <span class="en">Italian culture, faith and language — together</span>
+  </p>
+
+  <div class="hero-meta">
+    <div class="meta-pill">
+      <span class="icon">⏱</span>
+      <span class="it">2 ore · online</span>
+      <span class="en">2 hours · online</span>
+    </div>
+    <div class="meta-pill">
+      <span class="icon">👥</span>
+      <span class="it">Gruppo piccolo</span>
+      <span class="en">Small group</span>
+    </div>
+    <div class="meta-pill">
+      <span class="icon">💬</span>
+      <span class="it">Conversazione in italiano</span>
+      <span class="en">Conversation in Italian</span>
+    </div>
+  </div>
+
+  <div class="hero-cta">
+    <a href="YOUR_FORM_LINK" class="btn-primary" target="_blank">
+      <span class="it">Iscriviti ora</span>
+      <span class="en">Register now</span>
+    </a>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="line"></div>
+    <span class="it">scopri</span>
+    <span class="en">discover</span>
+  </div>
+</section>
+
+<!-- FOR WHO -->
+<section class="for-who">
+  <div class="container fade-in">
+    <div>
+      <p class="section-label">
+        <span class="it">Per chi è</span>
+        <span class="en">Who this is for</span>
+      </p>
+      <h2 class="section-title">
+        <span class="it">Hai l'Italia <em>nel cuore</em>?</span>
+        <span class="en">Does Italy live <em>in your heart</em>?</span>
+      </h2>
+      <div class="divider"></div>
+
+      <div class="quote-block">
+        <blockquote>
+          <span class="it">"Non voglio solo studiare l'italiano. Voglio viverlo."</span>
+          <span class="en">"I don't just want to study Italian. I want to live it."</span>
+        </blockquote>
+      </div>
+
+      <p>
+        <span class="it">Questo workshop è per te se hai un legame con l'Italia — per le radici, la fede o il cuore — e vuoi usare questo tempo di Quaresima per avvicinarti alla lingua e alla cultura italiana in modo autentico.</span>
+        <span class="en">This workshop is for you if you have a connection with Italy — through roots, faith or heart — and want to use this Lenten season to come closer to the Italian language and culture in an authentic way.</span>
+      </p>
+    </div>
+
+    <div>
+      <p class="section-label">
+        <span class="it">Cosa porti via</span>
+        <span class="en">What you'll take home</span>
+      </p>
+      <h2 class="section-title" style="font-size:clamp(22px,3.5vw,34px);">
+        <span class="it">Non una lezione.<br>Un'<em>esperienza</em>.</span>
+        <span class="en">Not a lesson.<br>An <em>experience</em>.</span>
+      </h2>
+      <div class="divider"></div>
+      <p style="margin-bottom:16px;">
+        <span class="it">In 2 ore esplorerai la Quaresima e la Pasqua in Italia — dalle processioni della Settimana Santa alla colomba, dal racconto di Emmaus a cosa significa per te oggi la parola <em>rinascita</em>.</span>
+        <span class="en">In 2 hours you'll explore Lent and Easter in Italy — from Holy Week processions to the Easter colomba, from the story of Emmaus to what the word <em>rinascita</em> (rebirth) means for you today.</span>
+      </p>
+      <p>
+        <span class="it">L'italiano è il mezzo, non il fine. Parlerai, ascolterai, ti fermerai a riflettere — tutto in italiano.</span>
+        <span class="en">Italian is the medium, not the goal. You'll speak, listen and take time to reflect — all in Italian.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAM -->
+<section class="program">
+  <div class="container fade-in">
+    <p class="section-label">
+      <span class="it">Il programma</span>
+      <span class="en">The programme</span>
+    </p>
+    <h2 class="section-title">
+      <span class="it">Due ore, <em>un viaggio</em></span>
+      <span class="en">Two hours, <em>one journey</em></span>
+    </h2>
+    <div class="divider"></div>
+
+    <div class="timeline">
+
+      <div class="tl-block">
+        <div class="tl-time">0:00</div>
+        <div class="tl-body">
+          <div class="tl-badge">Inizio · Start</div>
+          <div class="tl-title">
+            <span class="it">Iniziamo da te</span>
+            <span class="en">We start with you</span>
+          </div>
+          <div class="tl-desc">
+            <span class="it">Condividiamo parole, ricordi, speranze. La conversazione inizia subito — personale e in italiano.</span>
+            <span class="en">We share words, memories, hopes. The conversation begins right away — personal and in Italian.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-block">
+        <div class="tl-time">0:10</div>
+        <div class="tl-body">
+          <div class="tl-badge it">Prima ora · Cultura</div>
+          <div class="tl-badge en">Hour one · Culture</div>
+          <div class="tl-title">
+            <span class="it">La Quaresima e la Pasqua in Italia</span>
+            <span class="en">Lent & Easter in Italy</span>
+          </div>
+          <div class="tl-desc">
+            <span class="it">Scopriamo insieme i riti della Settimana Santa, i cibi di Pasqua e la Pasquetta. In piccoli gruppi, poi tutti insieme.</span>
+            <span class="en">We explore together the rituals of Holy Week, Easter foods and Pasquetta. In small groups, then all together.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-block">
+        <div class="tl-time">1:05</div>
+        <div class="tl-body">
+          <div class="tl-badge">Pausa · Break</div>
+          <div class="tl-title">
+            <span class="it">Una pausa</span>
+            <span class="en">A moment to breathe</span>
+          </div>
+          <div class="tl-desc">
+            <span class="it">Acqua, caffè — con una domanda aperta sulla Pasqua da tenere in mente.</span>
+            <span class="en">Water, coffee — with an open question about Easter to keep in mind.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-block">
+        <div class="tl-time">1:15</div>
+        <div class="tl-body">
+          <div class="tl-badge it">Seconda ora · Fede</div>
+          <div class="tl-badge en">Hour two · Faith</div>
+          <div class="tl-title">
+            <span class="it">La strada di Emmaus — Luca 24</span>
+            <span class="en">The road to Emmaus — Luke 24</span>
+          </div>
+          <div class="tl-desc">
+            <span class="it">Leggiamo il testo insieme, parliamo in piccoli gruppi e riflettiamo. Una storia che diventa conversazione vera.</span>
+            <span class="en">We read the passage together, talk in small groups and reflect. A story that becomes real conversation.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-block">
+        <div class="tl-time">1:50</div>
+        <div class="tl-body">
+          <div class="tl-badge">Fine · Close</div>
+          <div class="tl-title">
+            <span class="it">Rinascita</span>
+            <span class="en">Rebirth</span>
+          </div>
+          <div class="tl-desc">
+            <span class="it">"La Pasqua non è solo una tradizione. È una promessa di vita nuova." — Ogni partecipante porta una parola per chiudere insieme.</span>
+            <span class="en">"Easter is not just a tradition. It is a promise of new life." — Each person brings one word to close together.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EMMAUS QUOTE -->
+<section class="emmaus">
+  <div class="container fade-in">
+    <div class="emmaus-inner">
+      <div class="verse-card">
+        <blockquote>
+          <span class="it">«Non ci sentivamo come un fuoco nel cuore, quando egli lungo la via ci parlava e ci spiegava la Bibbia?»</span>
+          <span class="en">«Non ci sentivamo come un fuoco nel cuore, quando egli lungo la via ci parlava e ci spiegava la Bibbia?»</span>
+        </blockquote>
+        <cite>Lc / Lk 24,32</cite>
+      </div>
+      <div>
+        <p class="section-label">
+          <span class="it">Il cuore del workshop</span>
+          <span class="en">The heart of the workshop</span>
+        </p>
+        <h2 class="section-title" style="font-size:clamp(24px,4vw,38px);">
+          <span class="it">Capire qualcosa<br>solo <em>dopo</em></span>
+          <span class="en">Understanding something<br>only <em>after</em></span>
+        </h2>
+        <div class="divider"></div>
+        <p>
+          <span class="it">I discepoli camminano, parlano, non riconoscono. Poi, a tavola, tutto diventa chiaro. In questo workshop la lingua, la cultura e la fede si incontrano — e a poco a poco qualcosa si riaccende.</span>
+          <span class="en">The disciples walk, talk, and do not recognize. Then, at table, everything becomes clear. In this workshop language, culture and faith meet — and little by little something rekindles.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTRUCTOR -->
+<section class="instructor">
+  <div class="container fade-in">
+    <p class="section-label">
+      <span class="it">La tua insegnante</span>
+      <span class="en">Your teacher</span>
+    </p>
+    <h2 class="section-title">
+      <span class="it">Legàmi <em>in Italia</em></span>
+      <span class="en">Legàmi <em>in Italia</em></span>
+    </h2>
+    <div class="divider"></div>
+    <div class="instructor-grid">
+      <img class="avatar" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/7QCEUGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAGgcAigAYkZCTUQwYTAwMGFhYTAxMDAwMGEzMDMwMDAwNTgwNTAwMDBiMjA2MDAwMDkwMDcwMDAwN2QwODAwMDA2ZTBiMDAwMGM3MGIwMDAwNDQwZDAwMDAxZDBlMDAwMDU0MTIwMDAwAP/bAIQABQYGCwgLCwsLCw0LCwsNDg4NDQ4ODw0ODg4NDxAQEBEREBAQEA8TEhMPEBETFBQTERMWFhYTFhUVFhkWGRYWEgEFBQUKBwoICQkICwgKCAsKCgkJCgoMCQoJCgkMDQsKCwsKCw0MCwsICwsMDAwNDQwMDQoLCg0MDQ0MExQTExOc/8IAEQgAlgCWAwEiAAIRAQMRAf/EAHUAAAEFAQEAAAAAAAAAAAAAAAMBAgQFBgAHEAABAwIDBQUFBwUAAAAAAAABAAIDESEEEjEQIDBBcRMiMlFhBYGRobEUUmLB0eHwI0BCQ5IRAQACAQMDAwUBAQAAAAAAAAEAESExQVEQYXGBkaEgscHR8OHx/9oADAMBAAIAAwAAAAH0RHNaZrXM7msc1eaxwuThUeQR3o6eQP5PXW4vXKrhuFytE8XK2vmwnd6K1zWjY1zOVjHM7kxexxg35S73dtFP5LA9uj93hV3f4Mw/VEq7E7EC4PKkUwXd6Kx4+E0bh8qDVndn4FlUQ5l/ofG94A+xNiTqKZ5Z7H5nyF0FLbT4yAeFVRiKveiDIJwBjcJHINQ8sUnQK2zqro+gYXBVe1c1uYo93gih1K8yfCaEgFVhY8hy+hCIF0cYXgRUrpOLa7bZk56yyXRxztLS21HohuiUfQpMSYxwZ8RoCBVWSocxV34CAdFGAUF4weaaLKhkTPXPF/UIMzVSalQHlUEnybhxtNin2MH1QdNMlxJAXCDNZYVlmq7nPWmVscxFoNBmJtRVRCAo9hJ9Q8/3NbZ31jCmxzi8P9B85PHivGlhA18irtb7KTHxZFbfjtai3i2lvBEbQeewc1q8shM4/pNJrNTtfP8A1CFNSNLxgjZrL2tRPgcrJapa21RbXOeM7mtRLmku6fXtl3fWuNzua1mdkw8yC66uv7CySRaZ0dRbVvOzYbANbf0loOWIxbSkvZtbJ5XngxbyivajWb2d5p1Ja+m5Gg6VDq5kjtRhl5OkQR11rw5WHZu+rtBim7fkb53p73hSLu6xXUGkVO6W3//aAAgBAQABBQLg1VVXjlS4xrVJjnFOmcU2d4UOPQNeLj56JkLpEPZjkcC5qdA4I2WHxGVA14ZNFDDnMcQGyifCCsXAFSiwz8zeFiXOqyfIosW1yBQRU8alFDgnd3havme4J0uZYbEAh+Ooo/aTSs4cMe3KcI2jeFoiGOUkIcZsE0R4qMhMmIElWNxL3TIDLwidkzwsKAE+4BbKOxonsBX+7hSlBOdV8QTGlUGYMUujmhnCLqLFYuhwWI7RpZdlEbKjyQpcYGujcXb52FTSZRMsLIWPjo5BioisVixEO1KgxAdwDK1GdixE4KkfmUHjjdlTJinSkqhcsY7+omuylspQkrtOyaVOUhTjsi1i7wYFRSuytn1QTXWCadhUrqBSaSG7tkEdVhkLLMsZOU8qibqhfcxDtjgphsAWDCEV3MTrDEyVLtjNY0220ouzFPFpFzUUnZKN4cJJAFicRUPR2RNTbJu4BsepwnBAotqmCicU9SLLaijQN27n2eq+yOUjS1Si40De0cBsKeFKhplUaBq5uwAuT2EFiCIqsVhW0y0TdKbZUVHc6LLlDNY251HgmUyALGC//9oACAEDAAE/AeKxtUIwsgTmU347cuXl/LoDNWn6p8ZsU8W6b8NKCvxCEuRzcthUF3rTzRZTU0PlyKkBPvt++8FFcBGvkR8wnPPmnyUB8zuVX2hn32/9BZgsO6yJUr8oReo/aETzTNQ+tlXZ7ZxhjAiaaF/i6fusC3MfyUPhb0UAtsnNlIbFTNp8/wBPmV7LxPaMynWO3u5fps9oT9rK93LRvQLAG9fJdpRo9f5dYDHCQZSaOHLzHmsT7Qjg8Tqu5MHiP6D1KjxJlq53w8lNJRp6LE/z3L2fP2UrfJ3dPv8A3VVP7DnDqNaHj7wIHxB0WEBjeQ4FtK1BshiMopejR3ncgpZa0CgKZJ3R1U0lWn0WJFKdE1hcaAVJ5BYcyhjQ6O4/FT+FFYuJrmPJaCWtdQ8xbzUrszQTrWnW312QeII2a4oHw/iIBT4g9xB5U+oUcDI/CwN6C5Umq//aAAgBAgABPwHcrwXuyozHohIUySu/LcpwogVGbob0up2A+nvUR8+V94p1nFU2Qsqem72Z+6fgnLEaoqJmYprU7DPF6fDbgoc3ePLRTmik1KnN9mHbqUwXTDVYqLK6vJ3157MOzK0D4rECyy1JWMwpYc3+J+Sgwb5dBbm46IwCOjQomXCiWJjzNPpcbI/acRFzl9CD+SlIcKg1rzRir1OgTWJ6czvHoo20KiNU5wAqTQJ+Qk0dbpsw8ha5tDSpFRyKYKHY/Rf5Bfe/CDRNeWtqPX6FPmc/xOJ6lQ+EL//aAAgBAQAGPwL+7otaBalarvD38bKNui0V0By4pc7nvjh5RoR9V4SfkqaHcKKpw3eQ+qsFexVzQ+q7t13gWqoVVXmeGVrQ/BUHeK9bXVtF3m/mF2kdracimgtyu5hU4xHogD4tmUaC5/ILNSorwx12FtCrFaqhXP4lUCA568Oy9RYqo1QzD36KxKGYUNflsIpUgKp1PCr8FXzQ9bHd9eQRqdbr14Gq12jddwaDgn+wptpuAeZXTcA2ehXTb0Vd+u7Xdsq+aqNlBujg149rLUK4psvpVW0HAO5a6vuZhaiJ5V3q7a+ezqhW6tZAr//aAAgBAQEBPyHq9XoxpEyr1YxixfoerFUXclOI1gcRn3Zut6ylR3F09J+oIsjGMY/Sx6KvWiGLijWar+UJ4S2hGdlrB2uUB5jGMX6GMYQV0C/aamF3+viaKQJRhGky8ab8RvqX5jFix6vRjGpaDemLP4GOae9DL7xS3if39BXlC7JSJ7wxYxixjGMYxF2wV6K+M+8t9E1cf7LBTuQ2EOyr76yzhXkyTCqcukzBZPM5W9x6RYsWL0YxYxZlKrF08cTYXey9mG3OxVHlIGxg35C03G6xBgPglGbvZYfiN2Hk6vSfxKxB3OdyVgaAHtFjFi9GMYyrLNahigPMtHVd4TbFTAAPf05JzuPBKjA5w2Z9zL/sptikG21Eu4xjGMYxYs0nMH7SybAu9pTzcQ5nB/tY3Sw5O0HS6/1vBVOtiu8SEytPjE0jFjGMYxhao1Y0/M1Xf/AyzSG6d6ZeAFNRl7So1vGGYc6Cn5QUQn2lu6B3H3Igvf2IsWLFjHoWKWep0Hfn0l3Ldq7ysNMDkYAOZwwpxK3cft37x/UutYq3dlIaD5lxjGMYsJqZxvzGdbD8ufiXJ8mLSpwLmjFR1zRCd0Gj0JhjEnM7Ng4OGLHoWM23l6arlysZgXiIGUwmyb0wZ98wqLId5kLtNFurNjiPRbvt5Y88TNpxZGsuidBmO/OkDndH0cwaSxufjNKDfnHwMyLtgeYNNxjLH1IYlDX/AE/2WB4RMvRvL7blRHSyGXIbazVLxMx5jquyj0L+8FA9/MqD0X/8qEuUXvvD5xCr1G0ZFMDTswOlwDLFbAfeYTLMZkvz9p8B+X/J3a9WVQnCZfWbT+ZkrmYhGOv4is3wTv65impgT2mD8syhEjK5/ol1+lQ5itN5S4eSU9UlBSGWVDKIKzDdO8NVGmfaavQkyHeugjtG0q2DwTR0GKSzvBsLUxtqR88YhK0VcKdKjq+xEVhbywZ9OSYa/wBmWQVyIdccFUaIDIQZzhd5RoA7SvkWT//aAAwDAQECAQMBAAAQijYfW7gk6Bhp7W5SOEeoVNZq6csFaCxrkEC08tjogPfAoebFVgmkEakUmTNqM8sdq/3+rDCg/g4lHI/KgrEJ9o7VgKTiCDCABjwi/9oACAEDAQE/EDowJXSvoOqP8wWuY6elzzR+geukI2cs5HGuWvEBUqGTdXfBp4lqixt9DfxLL/QIdLqDYGw+G7v4Y2aLmDs7KXHeWaX2ByckwmXGnndH6BnKLAQvd09ZtXOau8J+oIAZ2vfnzMYb1H7+v0tnN/G8EMN+JUuLiO+JlDXQ7SnXMpG5oFt4XHz0XKxQVGppC9rXfY7xuZzk0qVgvfL7RUHAPbEY889Kwb6z2pmXtavQaHuehMyXUuV6/TPolyqW0+hUe+vrMfci/wB+uk87QusC6dg6SjjDs6WzmtzaA4E1l+h7mCaOrcDQcH9mXHuDzMn+zZr2H3ZaFrxNaH0o+LhF+C0CepFe53ixQ0Crsxmc4RRyBpe/aUuHPrCEd35jXmAy/uNJyzD5o/PxPUB6QO5lAKr4JbLKlQmsFlOjXOdYIjoJgsE41H2d4uwlJihuNHu1l2+sz80wbXJ4L40nm57mwr9wecCtY1L7LN1qhQKMZdX1mr6T/9oACAECAQE/EPpX1uDK6EMWxukeX0tw+lYPzHjGkqrz0H0MV+Rm0w74GAh1qOGg95y6Z5MRXWp/1EFQY+IqN5iXQy95xQG1z1f7KlQUlY6G17vpKP54h9yXeEY17GkxPPQYpyfx7+sqc/a+TNBzPSv7EqIvd5cP4iOc2ih67vYzONJryyzzdGDa/A/ZKl1VmrD6IR/sQmAUoNlSzeLPLN6HEKhzcVvf+/EzIiAGqtBLxnZKsZ4eIQrUHB1EMmn6mM7Q0mtNRj8h2MF7j91+Jtb6CIeCP5PvP//aAAgBAQEBPxB6PQxiixQt0FvDQMWLFHF1BjHoYvQItamqDtAl8XcX7QKVXc38RS3gCpjCm7uLTztE7v6QUliWVuMUXQ44xjHqLMqLoVPO3tKOFct6B4ltc1uQEM21ZC4MRS3GRfQ9f8nbRcUcfUY9RRCqUl0oWwsxx9r0RmxJVDWERaJSvpaPwlgs1pGUWhT6Yi6woxiixRSio1cCbvOdA6DGiE/zGBDt78KPiBSMWaYjaGaes1d4zYBWTd36Tj+gFFFFNbnnX4aSVryh9IG4/C+w6Qnv03DXDQ5QkwupNo5pNfSUugFFdutawpi3Ga7M/HvbdISu74bK86/SUPQugulitB4tDW2LvZhPnB+5G/29vl/uXNa99bbS0rPpMMdhWmgYKmlm7hO+r3OaiYtCvtK4r2wj9OH8Z6Q9EA9FdB9aYo4ooJUoJr4NP5mYcbi/aUYlBbXFbkR7Y28MdGpppY35H/Zetrwgr/ZgDwtgIbZW1fJk7MqLNIo444o4+sPQbH2Za1/aILAKTSj7zvRuxEreGmMQezaxu8zG8LggCNbANNz+ZgH/AAH/AEgUqLpOOKOOOELshYFlw6jhfmtJlPtB+Y+SNwVGx74953OQI99XztBg0eRrzjgi1ab87u0a1piZnSdpuwI7j/jNrMNq2hwcH01S6V1gNzbW/N21ek3Q2clt4q7b+CsckeNQYd6m6h7MpaDxKucK94vAgl2e5wN2C7Q+6N/xDHdHWx/fMbxxxxx9K/o13v7Q1mf+cSuFDR/HZUex59jYjEf5hlsWIDL6ExdPu5mpPYxP1MNH3uNGcTVBA+ZvC7O/7mKPNp79JRdJWiDBb8niCsujh9dIzC5JnjiO5cbVEUO0boywlKvNTMa6nmbTCd5T2gbFqlweH4vQjorX7Iopy3VewIGq5cvTefwgMzCumntH9iB/nEC4/YZmQ4GZaplAjNgMx23MFiLeqSryMAv7AZ9ugF0++f7H5j3ejC9IdlqeIIW3+H4n9PMHONJX8lHJesA72fDDM1KKbEJnYstr47x3/N57AQxLCcvcnynZU9zL89GKuIoug6URo5gA0vTs7fMtM4yPLX/YMuFM58nymgRL5Bp6QTYT1OzMP8RMPvxyasGUCiB4PySt3gOWDA5NYZjiOOugXh6z0NPg/iFjD3hQbMGoCpxXtAgYHeANb+ZlDOPNe0Ah2PhGIxMbtywcmmFoHQcTW3W0NT3P1AjyBjkO96eksCOzHo6Mv2p9+z9TWDwLq9oIc1a1QH9pBbTgSoreLAnKnaHukXswrVi/kz8QjTpmeZYcvYmBUUtnw3Wh3XSWhxG4e8GHRRkmws+ZcqKotvtQcIew/uXSrlUqRwXMsspLkfaGCT5s08cRWtTUN4bu/jLGdg0vRJVkvX3l97NLvG14JWkQZjdK1p4uYGgwAD4lMf4Mz//Z" alt="Francesca Corona">
+      <div>
+        <div class="instr-name">Francesca Corona</div>
+        <div class="instr-role">
+          <span class="it">Insegnante di italiano · Didattica per stranieri</span>
+          <span class="en">Italian teacher · Specialist in teaching Italian to foreigners</span>
+        </div>
+        <p>
+          <span class="it">Legàmi in Italia nasce da una convinzione: l'italiano non è solo una materia di studio. È un filo che collega famiglia, fede, cultura e memoria. Con una formazione specifica nell'insegnamento dell'italiano a stranieri, creo percorsi su misura per ogni studente — non corsi standard. Ogni contenuto nasce dalla tua storia.</span>
+          <span class="en">Legàmi in Italia was born from a belief: Italian is not just a school subject. It is a thread connecting family, faith, culture and memory. With specialist training in teaching Italian to non-native speakers, I create a personal path for each student — not a standard course. Every piece of content grows from your story.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="container fade-in">
+    <p class="section-label">
+      <span class="it">Domande frequenti</span>
+      <span class="en">Frequently asked questions</span>
+    </p>
+    <h2 class="section-title">
+      <span class="it">Hai <em>dubbi</em>?</span>
+      <span class="en">Have <em>questions</em>?</span>
+    </h2>
+    <div class="divider"></div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="it">Che livello di italiano è richiesto?</span>
+          <span class="en">What level of Italian do I need?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>
+            <span class="it">È consigliato un livello elementare (A2–B2), ma chiunque può partecipare! I materiali sono pensati per chi ha un livello più basso, e ci sarà sempre spazio per domande e chiarimenti durante il workshop.</span>
+            <span class="en">A basic level (A2–B2) is recommended, but anyone is welcome! The materials are designed with lower levels in mind, and there will always be space for questions and clarification during the workshop.</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="it">A che ora è il workshop? E nel mio fuso orario?</span>
+          <span class="en">What time is the workshop? And in my time zone?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>
+            <span class="it">Il workshop si tiene il <strong>14 marzo 2026 dalle 14:30 alle 16:30 (ora di Roma)</strong>. Ecco alcuni riferimenti:</span>
+            <span class="en">The workshop takes place on <strong>March 14, 2026 from 2:30–4:30 PM (Rome time)</strong>. Here are some reference times:</span>
+          </p>
+          <ul class="faq-tz">
+            <li>🇮🇹 Roma / Rome — 14:30–16:30</li>
+            <li>🇺🇸 New York (ET) — 9:30–11:30 AM</li>
+            <li>🇺🇸 Los Angeles (PT) — 6:30–8:30 AM</li>
+            <li>🇧🇷 São Paulo (BRT) — 10:30 AM–12:30 PM</li>
+          </ul>
+          <p style="margin-top:12px;">
+            <span class="it">Vuoi verificare il tuo fuso? <a href="https://www.timeanddate.com/worldclock/converter.html" target="_blank" class="faq-link">Usa questo convertitore →</a></span>
+            <span class="en">Want to check your time zone? <a href="https://www.timeanddate.com/worldclock/converter.html" target="_blank" class="faq-link">Use this converter →</a></span>
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="it">Cosa ricevo dopo l'iscrizione?</span>
+          <span class="en">What do I receive after registering?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>
+            <span class="it">Dopo la conferma riceverai: il giorno prima del workshop il workbook digitale e i materiali di approfondimento, e il link per partecipare. Il lunedì dopo il workshop riceverai la registrazione completa.</span>
+            <span class="en">After confirmation you will receive: the day before the workshop, the digital workbook, the extra materials and the link to join. The Monday after the workshop you will receive the full recording.</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="it">E se non posso partecipare in diretta?</span>
+          <span class="en">What if I can't join live?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>
+            <span class="it">Nessun problema! Riceverai la registrazione completa del workshop, disponibile fino a metà aprile. Potrai rivederla con calma quando vuoi.</span>
+            <span class="en">No problem! You'll receive the full recording, available until mid-April. You can watch it whenever you like.</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="it">Fino a quando posso iscrivermi?</span>
+          <span class="en">When do registrations close?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>
+            <span class="it">Le iscrizioni chiudono il <strong>13 marzo 2026</strong>. I posti sono limitati a 8 partecipanti per garantire una conversazione vera e di qualità.</span>
+            <span class="en">Registrations close on <strong>March 13, 2026</strong>. Places are limited to 8 participants to keep the conversation genuine and meaningful.</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="it">Serve una preparazione specifica?</span>
+          <span class="en">Do I need to prepare anything?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>
+            <span class="it">No, nessuna preparazione! Porta solo la tua curiosità e voglia di scoprire la Pasqua italiana. Tutti i materiali ti arriveranno prima del workshop, ma non è necessario studiarli in anticipo.</span>
+            <span class="en">No preparation needed! Just bring your curiosity and your interest in Italian Easter. All materials will be sent before the workshop, but there's no need to study them in advance.</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="it">Come funziona il pagamento?</span>
+          <span class="en">How does payment work?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>
+            <span class="it">Dopo aver compilato il modulo di iscrizione, riceverai un'email con il link per il pagamento (€35) tramite Stripe. Una volta completato il pagamento, la tua iscrizione è confermata.</span>
+            <span class="en">After filling in the registration form, you'll receive an email with a payment link (€35) via Stripe. Once payment is complete, your place is confirmed.</span>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container fade-in">
+    <p class="section-label">
+      <span class="it">14 Marzo 2026 · 14:30–16:30 ora di Roma · Online</span>
+      <span class="en">March 14, 2026 · 2:30–4:30 PM Rome time · Online</span>
+    </p>
+    <h2 class="section-title">
+      <span class="it">Prenota il tuo posto</span>
+      <span class="en">Reserve your place</span>
+    </h2>
+    <div class="divider"></div>
+    <div class="price-tag">€35</div>
+    <p>
+      <span class="it">I posti sono pochi (massimo 8) per mantenere la conversazione viva. Non aspettare troppo.</span>
+      <span class="en">Places are limited (max 8) to keep the conversation alive. Don't wait too long.</span>
+    </p>
+    <a href="YOUR_FORM_LINK" class="btn-primary" target="_blank">
+      <span class="it">Iscriviti ora →</span>
+      <span class="en">Register now →</span>
+    </a>
+    <a href="mailto:fcorona248@gmail.com" class="btn-secondary">
+      <span class="it">Hai domande?</span>
+      <span class="en">Have questions?</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span>Legàmi in Italia</span> · Francesca Corona · <span class="it">Tutti i diritti riservati</span><span class="en">All rights reserved</span></p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  function setLang(lang) {
+    document.body.dataset.lang = lang;
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+    });
+  }
+  const userLang = navigator.language || 'en';
+  if (userLang.startsWith('it')) setLang('it');
+  else setLang('en');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve
